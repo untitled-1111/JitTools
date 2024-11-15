@@ -22,4 +22,5 @@
 
 ## Прочее
 - Если вы хотите поддержать проект, вот ссылка на [donationalerts](https://www.donationalerts.com/r/untitled1111)
+
 ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=untitled-1111&show_icons=true&theme=dark)
