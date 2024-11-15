@@ -15,6 +15,6 @@
 
 ## 📊 Статистика
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=untitled-1111&show_icons=true&theme=radical)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=untitled-1111&show_icons=true&theme=dark)
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=untitled-1111&layout=compact&theme=radical)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=untitled-1111&layout=compact&theme=dark)
