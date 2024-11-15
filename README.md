@@ -21,6 +21,6 @@
 - Тема на [BLASTHACK](https://www.blast.hk/threads/223498/)
 
 ## Прочее
-- Если вы хотите поддержать проект, вот ссылка на [donatepay]([https://www.donationalerts.com/r/untitled1111](https://new.donatepay.ru/@1306276))
+- Если вы хотите поддержать проект, вот ссылка на [donatepay](https://new.donatepay.ru/@1306276)
 
 ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=untitled-1111&show_icons=true&theme=dark)
