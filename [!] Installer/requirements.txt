@@ -1,3 +1,4 @@
 requests
 pathlib
 argparse
+customtkinter
