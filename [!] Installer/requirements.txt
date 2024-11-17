@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+requests
+pathlib
+argparse
+=======
+requests
+pathlib
+argparse
+>>>>>>> cd35e6f (update)
+customtkinter
