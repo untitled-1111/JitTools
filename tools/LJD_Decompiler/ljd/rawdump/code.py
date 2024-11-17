@@ -18,7 +18,7 @@ def read(parser):
     instruction_class = _MAP[opcode]
 
     if instruction_class is None:
-        errprint("Warning: unknown opcode {0:08x}", opcode)
+        # errprint("Warning: unknown opcode {0:08x}", opcode)
         instruction_class = instructions.UNKNW  # @UndefinedVariable
 
     instruction = instruction_class()
