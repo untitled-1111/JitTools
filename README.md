@@ -10,9 +10,37 @@
 3. Установить **Python 3.13** (обязательно с параметром **Add to PATH**).
 4. Запустить **Install JitTools** при помощи Python и следовать инструкциям для установки.
 
-## 🐞 Вы нашли ошибку или хотите предложить улучшение?
+## 🔍 Функционал
 
-Напишите об этом во вкладке [issues](https://github.com/untitled-1111/JitTools/issues)
+<details>
+
+- Декомпиляция
+    - [x] [LuaJIT Fork](https://www.blast.hk/threads/221567)
+    - [x] Python Fork
+
+- Анпротектор
+    - [x] [Unprot v2.1](https://www.blast.hk/threads/221567/post-1559984)
+
+- Запуск кода
+  - [x] [Moonsec Dumper](https://t.me/quesada_main)
+  - [x] [Hook Obfuscation](https://www.blast.hk/threads/127048)
+  - [x] [Lua Debugger](https://www.blast.hk/threads/46138)
+  - [x] [XOR Unpacker](https://github.com/Gork3m/filesecuring-xor-unpacker)
+
+- Деобфускаторы
+  - [x] [Base64 Deobfuscator](http://lua-users.org/wiki/BaseSixtyFour)
+  - [x] [Shit Deobfuscator](https://www.blast.hk/threads/173002/#post-1285137)
+
+- Компиляция
+  - [x] [LuaJIT Compiler](https://github.com/LuaJIT/LuaJIT)
+  - [x] [Joiner](https://www.blast.hk/threads/38714/post-376714)
+
+- Просмотр инструкций
+  - [x] [BCViewer](https://t.me/AkuJla)
+  - [x] [Luad](https://github.com/imring/Luad)
+  - [x] ASM
+
+</details>
 
 ## ❗ Важная информация
 
@@ -20,7 +48,16 @@
 - Лицензия: MIT
 - Тема на [BLASTHACK](https://www.blast.hk/threads/223498/)
 
-## Прочее
+## 🐞 Вы нашли ошибку или хотите предложить улучшение?
+
+Напишите об этом во вкладке [issues](https://github.com/untitled-1111/JitTools/issues).
+
+Как правильно создать тему с ошибкой:
+- Прикрепите к теме доказательства (скриншот/видео)
+- Прикрепите к теме файл, который пытаетесь использовать
+- Подробно опишите суть проблемы
+
+## 📂 Прочее
 - Если вы хотите поддержать проект, вот ссылка на [donatepay](https://new.donatepay.ru/@1306276)
 
 ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=untitled-1111&show_icons=true&theme=dark)
