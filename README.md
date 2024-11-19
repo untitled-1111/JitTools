@@ -13,6 +13,7 @@
 ## 🔍 Функционал
 
 <details>
+  <summary>Спойлер</summary>
 
 - Декомпиляция
     - [x] [LuaJIT Fork](https://www.blast.hk/threads/221567)
