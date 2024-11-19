@@ -59,6 +59,6 @@
 - Подробно опишите суть проблемы
 
 ## 📂 Прочее
-- Если вы хотите поддержать проект, вот ссылка на [donatepay](https://new.donatepay.ru/@1306276)
+- Если вы хотите поддержать проект, вот ссылка на [DonatePay](https://new.donatepay.ru/@1306276)
 
 ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=untitled-1111&show_icons=true&theme=dark)
