@@ -4,14 +4,15 @@
 
 import ljd.pseudoasm.prototype
 import ljd.util.indentedstream
+from ljd.bytecode.constants import T_NIL, T_FALSE, T_TRUE
 
+OPCODES = set(range(0x00, 0x3a))
 
 class _State:
     def __init__(self):
         self.flags = None
         self.stream = None
         self.source = None
-
 
 def write(fd, header, prototype):
     writer = _State()
@@ -28,18 +29,12 @@ def write(fd, header, prototype):
 def _write_header(writer, header):
     writer.stream.write_multiline("""
 ;
-; Disassemble of {origin}
-;
-; Source file: {source}
-;
 ; Flags:
-;	Stripped: {stripped}
 ;	Endianness: {endianness}
 ;	FFI: {ffi}
 ;
 
 """, origin=header.origin,
-                                  source=writer.source,
-                                  stripped="Yes" if header.flags.is_stripped else "No",
                                   endianness="Big" if header.flags.is_big_endian else "Little",
                                   ffi="Present" if header.flags.has_ffi else "Not present")
+

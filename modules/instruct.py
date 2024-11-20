@@ -19,7 +19,7 @@ def bcviewer(path):
         tk.messagebox.showinfo("BC Viewer", f"Успешно сохранено в файл {os.path.basename(output_file)}.")
 
 def luad():
-    os.system(f'tools{os.sep}Luad{os.sep}build{os.sep}bin{os.sep}Release{os.sep}luad.exe')
+    os.system(f'start "" /MAX tools{os.sep}Luad{os.sep}build{os.sep}bin{os.sep}Release{os.sep}luad.exe')
 
 def asm(path):
     file_path_abs = os.path.abspath(path)
@@ -34,4 +34,4 @@ def asm(path):
             f' --catch_asserts --asm --with-line-numbers --file="{file_path_abs}"'
             f' > "{output_file}"')
         
-    tk.messagebox.showinfo("ASM", f"Успешно сохранено в файл {os.path.basename(output_file)}.")
+        tk.messagebox.showinfo("ASM", f"Успешно сохранено в файл {os.path.basename(output_file)}.")

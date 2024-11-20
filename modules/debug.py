@@ -36,7 +36,7 @@ def moonsecdump(path):
         require = function(original)
             return function(v)
                 print('[require] ' .. v)
-        debugInfo('require.txt', v)
+        debugInfo('require - JTools (Moonsec).txt', v)
                 return original(v)
             end
         end,
@@ -67,7 +67,7 @@ def moonsecdump(path):
       local info = debug.getinfo(func, 'S')
       if info and info.source then
         local string = '[FUNCTION CALL] Функция: ' .. name .. ' Код: ' .. info.source
-        debugInfo('function_call.txt', string) 
+        debugInfo('function_call - JTools (Moonsec).txt', string) 
       end
       return func(...)
     end
@@ -96,15 +96,15 @@ def moonsecdump(path):
         __newindex = function(t, key, value)
             if type(value) == 'function' then
                 local string = '[FUNCTION DUMPER] Создана функция: ' .. tostring(key)
-                debugInfo('functions.txt', string) 
+                debugInfo('functions - JTools (Moonsec).txt', string) 
                 rawset(t, key, wrapFunction(value, tostring(key)))  
             elseif type(value) == 'table' then
                 local string = '[TABLE DUMPER] Создана таблица: ' .. tostring(key)
-                debugInfo('tables.txt', string)  
+                debugInfo('tables - JTools (Moonsec).txt', string)  
                 rawset(t, key, value) 
             else
                 local string = '[VARIABLE SET] Переменная: ' .. tostring(key) .. ' = ' .. tostring(value)
-                debugInfo('variables.txt', string)  
+                debugInfo('variables - JTools (Moonsec).txt', string)  
                 rawset(t, key, value)  
             end
         end
@@ -126,9 +126,9 @@ def moonsecdump(path):
     if type(tbl) == 'table' then
       for k, v in pairs(tbl) do
         if type(v) == 'table' then
-          debugInfo('dump.txt', table_to_string(v) .. '\\n')
+          debugInfo('dump - JTools (Moonsec).txt', table_to_string(v) .. '\\n')
         else
-          debugInfo('dump.txt', string.format('{Key: %s | Val: %s}\\n', tostring(k), tostring(v)))
+          debugInfo('dump - JTools (Moonsec).txt', string.format('{Key: %s | Val: %s}\\n', tostring(k), tostring(v)))
         end
       end
     end

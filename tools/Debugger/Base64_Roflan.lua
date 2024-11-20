@@ -36,15 +36,24 @@ end
 
 -- command line if not called as library
 if (arg ~= nil) then
-	local func = 'enc'
-	for n,v in ipairs(arg) do
-		if (n > 0) then
-			if (v == "-h") then print "base64.lua [-e] [-d] text/data" break
-			elseif (v == "-e") then func = 'enc'
-			elseif (v == "-d") then func = 'dec'
-			else print(_G[func](v)) end
-		end
-	end
+    local func = 'enc'
+    for n,v in ipairs(arg) do
+        if (n > 0) then
+            if (v == "-h") then 
+                local file = io.open("Decode - JTools (B64).txt", "w")
+                file:write("base64.lua [-e] [-d] text/data\n")
+                file:close()
+                break
+            elseif (v == "-e") then func = 'enc'
+            elseif (v == "-d") then func = 'dec'
+            else
+                local result = _G[func](v)
+                local file = io.open("Decode - JTools (B64).txt", "a")
+                file:write(result .. "\n")
+                file:close()
+            end
+        end
+    end
 else
-	module('base64',package.seeall)
+    module('base64',package.seeall)
 end

@@ -111,7 +111,7 @@ def _translate(writer, addr, value, attr_type):
     elif attr_type == ins.T_UV:
         name = prototype.debuginfo.lookup_upvalue_name(value)
         if name is None:
-            name = "unknwon"
+            name = "unknown"
         return "uv" + str(value) + '"' + name + '"'
     elif attr_type == ins.T_PRI:
         if value is None or value == T_NIL:
@@ -718,3 +718,4 @@ def init():
 
     for opcode, handler in _HANDLERS_MAP:
         _DESCRIPTION_HANDLERS[opcode] = handler
+
