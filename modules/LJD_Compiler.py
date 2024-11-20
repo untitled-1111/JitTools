@@ -28,11 +28,11 @@ def joiner(path):
             main_data = main_file.read()
             data = file.read()
 
-        roflanEbalo = random.randint(1, random.randint(666, 66666666666)) # даже не спрашивайте
+        roflanEbalo = random.randint(1, random.randint(666, 666666) + random.randint(2, 33)) # даже не спрашивайте
 
-        in_result = f"jittools_rofl_{roflanEbalo} = \""
+        in_result = f"function jittools_rofl_{random.randint(666, 66666666666)}()\nlocal jittools_rofl_{roflanEbalo} = \"" # не спрашивайте
         in_result += "".join(f"\\x{byte:02X}" for byte in main_data + data)
-        in_result += f"\"\nloadstring(jittools_rofl_{roflanEbalo})()\n\n"
+        in_result += f"\"\nloadstring(jittools_rofl_{roflanEbalo})()\nend\n"
 
         output_file_name = f"{os.path.splitext(file_path)[0]} - JTools (SJ){os.path.splitext(file_path)[1]}"
         with open(output_file_name, 'w', encoding='utf-8') as out_file:

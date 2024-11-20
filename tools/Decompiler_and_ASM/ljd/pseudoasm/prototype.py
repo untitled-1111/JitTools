@@ -18,8 +18,8 @@ def _write_header(writer, prototype):
 
 
 def format_header(writer, prototype):
-    return "{s}:{start}-{end}: {argn}{varg} args," \
-           " {uvs} upvalues, {slots} slots".format(
+    return "{s}:{start}-{end}: {argn}{varg} Args," \
+           " {uvs} UPVALUES, {slots} Slots".format(
             s=writer.source,
             start=prototype.first_line_number,
             end=prototype.first_line_number + prototype.lines_count,
@@ -30,31 +30,10 @@ def format_header(writer, prototype):
         )
 
 
-def write_debug_info(writer, prototype):
-    if prototype.lines_count == 0:
-        return
-
-    debuginfo = prototype.debuginfo
-    upvalue_name = debuginfo.upvalue_variable_names
-    writer.stream.write_line(";;;; upvalue names ;;;;")
-    for slot, name in enumerate(upvalue_name):
-        writer.stream.write_line("  {0}:\t{1}".format(slot, name))
-
-    writer.stream.write_line(";;;; variable info ;;;;")
-    variable_info = debuginfo.variable_info
-    for var in variable_info:
-        writer.stream.write_line("  {start}-{end}:\t{name}".format(
-            start=max(0, var.start_addr - 1),
-            end=var.end_addr - 1,
-            name=var.name,
-        ));
-
-
 def write_body(writer, prototype):
-    writer.stream.write_line(";;;; constant tables ;;;;")
+    writer.stream.write_line(";;;; CONSTANT Tables ;;;;")
     ljd.pseudoasm.constants.write_tables(writer, prototype)
 
-    write_debug_info(writer, prototype)
-
-    writer.stream.write_line(";;;; instructions ;;;;")
+    writer.stream.write_line(";;;; Instructions ;;;;")
     ljd.pseudoasm.instructions.write(writer, prototype)
+
