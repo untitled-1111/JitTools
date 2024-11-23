@@ -1,18 +1,6 @@
 # JitTools Installer 
 # https://www.blast.hk/threads/223498/
 
-from subprocess import run
-from sys import executable
-from os import system
-from requests import head
-from re import search
-from os import listdir
-from zipfile import ZipFile
-from tkinter import messagebox
-from os import remove
-from subprocess import PIPE
-from requests import get
-
 links = {
     "Visual C++ All-In-One": "https://github.com/abbodi1406/vcredist/releases/download/v0.85.0/VisualCppRedist_AIO_x86_x64.exe",
     ".NET Core 3.1 SDK": "https://download.visualstudio.microsoft.com/download/pr/b70ad520-0e60-43f5-aee2-d3965094a40d/667c122b3736dcbfa1beff08092dbfc3/dotnet-sdk-3.1.426-win-x64.exe"
@@ -20,7 +8,6 @@ links = {
 
 def install_jittools():
     try:
-        from ctypes import windll
         windll.kernel32.SetConsoleTitleW("JitTools Installer")
         print("\n\033[90m-> JitTools Installer\033[0m")
 
@@ -44,7 +31,6 @@ def install_jittools():
         with ZipFile(match.group()) as zf:
             total_files = len(zf.namelist())
             for i, file in enumerate(zf.namelist(), start=1):
-                from os import path
                 if path.exists(file):
                     remove(file)
                 zf.extract(file)
@@ -84,9 +70,7 @@ def install_jittools():
                 print(f"\n\033[96mЗагрузка {module_name}...\033[0m")
                 file_name = link.split('/')[-1]
 
-                from os import path
                 if not path.exists(file_name):
-
                     response = get(link, stream=True)
                     total_size = int(response.headers.get('content-length', 0))
                     with open(file_name, 'wb') as f:
@@ -101,31 +85,15 @@ def install_jittools():
                 print(f"\n\033[92mМодуль {module_name} успешно загружен.\033[0m")
                 print(f"\033[96mЗапуск {module_name}...\033[0m")
 
-                from ctypes import windll
                 windll.shell32.ShellExecuteW(None, "runas", file_name, None, None, 1)
 
         else:
             input("\033[91mДля закрытия утилиты нажмите ENTER...\033[0m")
-            for file in ["JitTools {}.zip".format(version), "Install JitTools.py", "requirements.txt"]:
-                try:
-                    remove(file)
-                except:
-                    pass
-            from sys import exit
             exit()
             
         print(f"\nУстановка успешно завершена, открываем папку...")
-
-        from os import startfile, path
-        from sys import exit
-
         startfile(path.abspath('.'))
         input("Для закрытия утилиты нажмите ENTER...")
-        for file in ["JitTools {}.zip".format(version), "Install JitTools.py", "requirements.txt"]:
-            try:
-                remove(file)
-            except:
-                pass
         exit()
 
     except Exception as e:
@@ -133,8 +101,16 @@ def install_jittools():
         exit()
 
 if __name__ == "__main__":
-    run([executable, "-m", "pip", "install", "-r", "requirements.txt"])
-    print("\033[92m   Модули успешно установлены.\033[0m")
+    from os import system, path, startfile, listdir, remove
+    system('pip install -r requirements.txt')
+
+    from subprocess import run, PIPE
+    from sys import exit
+    from requests import head, get
+    from re import search
+    from zipfile import ZipFile
+    from tkinter import messagebox
+    from ctypes import windll
 
     system('cls')
     install_jittools()

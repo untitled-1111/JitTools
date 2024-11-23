@@ -3,3 +3,4 @@ pathlib
 argparse
 customtkinter
 pyperclip
+configparser
