@@ -40,7 +40,7 @@ if (arg ~= nil) then
     for n,v in ipairs(arg) do
         if (n > 0) then
             if (v == "-h") then 
-                local file = io.open("Decode - JTools (B64).txt", "w")
+                local file = io.open("Decode - JitTools (B64).txt", "w")
                 file:write("base64.lua [-e] [-d] text/data\n")
                 file:close()
                 break
@@ -48,7 +48,7 @@ if (arg ~= nil) then
             elseif (v == "-d") then func = 'dec'
             else
                 local result = _G[func](v)
-                local file = io.open("Decode - JTools (B64).txt", "a")
+                local file = io.open("Decode - JitTools (B64).txt", "a")
                 file:write(result .. "\n")
                 file:close()
             end

@@ -4,42 +4,56 @@ import os
 import tkinter as tk
 import re
 import codecs
+import ctypes
+import sys
 
 def base64d(arg):
-  os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
-        f' tools{os.sep}Debugger{os.sep}Base64_Roflan.lua -d "{arg}"')
+    try:
+        os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
+                f' tools{os.sep}Debugger{os.sep}Base64_Roflan.lua -d "{arg}"')
+    
+    except Exception as e:
+        tk.messagebox.showinfo("JitTools - B64", f"Произошла ошибка:\n[{e.__traceback__.tb_lineno}]: {e}")
+        ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 1) # SW_NORMAL
+        sys.exit()
   
 def shitd(file_path):
-  input_file_name, input_file_extension = os.path.splitext(file_path)
-  output_file_name = f"{input_file_name} - JTools (SD){input_file_extension}"
-  table_re = re.compile(r"(\{[\n\r\t \d,]*?\})")
-  number_re = re.compile(r"\d+")
-  with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
-      data = file.read()
-  entries = []
-  for match in table_re.finditer(data):
-      group = match.group(0)
-      table = group.replace("\r", "").replace("\n", "").replace("\t", "")
+    try:
+        input_file_name, input_file_extension = os.path.splitext(file_path)
+        output_file_name = f"{input_file_name} - JitTools (SD){input_file_extension}"
+        table_re = re.compile(r"(\{[\n\r\t \d,]*?\})")
+        number_re = re.compile(r"\d+")
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+            data = file.read()
+        entries = []
+        for match in table_re.finditer(data):
+            group = match.group(0)
+            table = group.replace("\r", "").replace("\n", "").replace("\t", "")
 
-      if table == "{}" or table == "{1}":
-          continue
+            if table == "{}" or table == "{1}":
+                continue
 
-      bytes_list = [int(num) for num in number_re.findall(table)]
-      entries.append(EncodedEntry(bytes_list, match.start(), match.end()))
+            bytes_list = [int(num) for num in number_re.findall(table)]
+            entries.append(EncodedEntry(bytes_list, match.start(), match.end()))
 
-  offset = 0
-  with open(output_file_name, 'w', encoding='utf-8', errors='ignore') as out_file:
-      for entry in entries:
-          out_file.write(data[offset:entry.start])
-          val = entry.decode()
-          if val is not None:
-              out_file.write(f"[[{val}]]")
-          else:
-              out_file.write(data[entry.start:entry.end])
-          offset = entry.end
-      out_file.write(data[offset:])
+        offset = 0
+        with open(output_file_name, 'w', encoding='utf-8', errors='ignore') as out_file:
+            for entry in entries:
+                out_file.write(data[offset:entry.start])
+                val = entry.decode()
+                if val is not None:
+                    out_file.write(f"[[{val}]]")
+                else:
+                    out_file.write(data[entry.start:entry.end])
+                offset = entry.end
+            out_file.write(data[offset:])
 
-  tk.messagebox.showinfo("Shit Deobfuscation", f"Успешно сохранено в файл {os.path.basename(output_file_name)}.")
+        tk.messagebox.showinfo("Shit Deobfuscation", f"Успешно сохранено в файл {os.path.basename(output_file_name)}.")
+        
+    except Exception as e:
+        tk.messagebox.showinfo("JitTools - Shit Deobf", f"Произошла ошибка:\n[{e.__traceback__.tb_lineno}]: {e}")
+        ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 1) # SW_NORMAL
+        sys.exit()
   
 class EncodedEntry:
   def __init__(self, bytes, start, end):

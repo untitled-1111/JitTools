@@ -4,16 +4,24 @@ import os
 import tkinter as tk
 import sys
 import random
+import tkinter
+import ctypes
 
 def compiler(path):
-  file_path_abs = os.path.abspath(path)
-  output_file = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}\\{os.path.splitext(os.path.basename(path))[0]} - JTools (LJ_C).lua"
+    try:
+        file_path_abs = os.path.abspath(path)
+        output_file = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}\\{os.path.splitext(os.path.basename(path))[0]} - JitTools (C).lua"
 
-  os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
-      f' -b "{file_path_abs}"'
-      f' "{output_file}"')
-  
-  tk.messagebox.showinfo("LuaJIT Compiler", f"Успешно сохранено в файл {os.path.basename(output_file)}.")
+        os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
+            f' -b "{file_path_abs}"'
+            f' "{output_file}"')
+        
+        tk.messagebox.showinfo("LuaJIT Compiler", f"Успешно сохранено в файл {os.path.basename(output_file)}.")
+    
+    except Exception as e:
+        tkinter.messagebox.showinfo("JitTools - LuaJIT Compiler", f"Произошла ошибка:\n[{e.__traceback__.tb_lineno}]: {e}")
+        ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 1) # SW_NORMAL
+        sys.exit()
 
 def joiner(path):
     try:
@@ -34,11 +42,14 @@ def joiner(path):
         in_result += "".join(f"\\x{byte:02X}" for byte in main_data + data)
         in_result += f"\"\nloadstring(jittools_rofl_{roflanEbalo})()\nend\n"
 
-        output_file_name = f"{os.path.splitext(file_path)[0]} - JTools (SJ){os.path.splitext(file_path)[1]}"
+        output_file_name = f"{os.path.splitext(file_path)[0]} - JitTools (SJ){os.path.splitext(file_path)[1]}"
         with open(output_file_name, 'w', encoding='utf-8') as out_file:
             out_file.write(in_result)
 
         tk.messagebox.showinfo("Joiner", f"Успешно сохранено в файл {os.path.basename(output_file_name)}.")
+
+
     except Exception as e:
-        print(f"[Joiner] {str(e)}")
-        input("[!] В JitTools произошла ошибка, сообщите о ней автору!")
+        tkinter.messagebox.showinfo("JitTools - Joiner", f"Произошла ошибка:\n[{e.__traceback__.tb_lineno}]: {e}")
+        ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 1) # SW_NORMAL
+        sys.exit()

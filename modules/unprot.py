@@ -14,7 +14,7 @@ def unprot_2(path):
         script = LuaJIT(path)
         basename = os.path.basename(path)
         fn, ext = os.path.splitext(script.path)
-        save_to = f"{fn} - JTools (UP_2){ext}"
+        save_to = f"{fn} - JitTools (U){ext}"
         saved_as = os.path.basename(save_to)
 
         protos = script.get_protos()
