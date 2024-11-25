@@ -13,7 +13,7 @@ local counterLoad = 1
 local ioopen = io.open
 local obfHook = function(code)
 	local filePath = getFilePathFromPathWithoutEx(arg[1])
-	local file = ioopen(filePath .. '-' .. counterLoad .. " - Tools (H).luac", "wb")
+	local file = ioopen(filePath .. '-' .. counterLoad .. " - JitTools (H).lua", "wb")
 	counterLoad = counterLoad + 1
 	if file then
 		file:write(code)
