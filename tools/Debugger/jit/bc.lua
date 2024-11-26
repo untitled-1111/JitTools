@@ -84,7 +84,7 @@ local function bcline(func, pc, prefix)
   local kc
   if mc == 10*128 then -- BCMstr
     kc = funck(func, -d-1)
-    kc = format(#kc > 40 and '"%.40s"~' or '"%s"', gsub(kc, "%c", ctlsub))
+    kc = format('"%s"', funck(func, -d-1):gsub("\n", "\\n"):gsub("\t", "\\t"))
   elseif mc == 9*128 then -- BCMnum
     kc = funck(func, d)
     if op == "TSETM " then kc = kc - 2^52 end

@@ -5,6 +5,7 @@ import tkinter as tk
 import sys
 import re
 import subprocess
+import pathlib
 
 def compiler(path):
     file_path_abs = os.path.abspath(path)
@@ -37,22 +38,27 @@ def compiler(path):
 
 def joiner(path):
     file_path = tk.filedialog.askopenfilename(
-        title=f"Выберите файл для склеивания [{os.path.basename(path)}]",
+        title=f"Выберите второй файл для склеивания [{os.path.basename(path)}]",
         filetypes=[("Lua files", "*.lua;*.luac;*.txt")]
     )
     if not file_path:
         sys.exit()
 
-    with open(path, 'rb') as main_file, open(file_path, 'rb') as file:
-        main_data = main_file.read()
-        data = file.read()
+    for i in range(0, 1):
+        data = bytearray(pathlib.Path(path).read_bytes())
+        data_two = bytearray(pathlib.Path(file_path).read_bytes())
 
-    in_result = f'loadstring("'
-    in_result += "".join(f"\\x{byte:02X}" for byte in main_data + data)
-    in_result += '")()'
+        result = "loadstring(\""
+        for j in data:
+            result += f"\\x{j:02X}"
+        result += "\")()\n"
 
-    output_file_name = f"{os.path.splitext(file_path)[0]} - JitTools (SJ){os.path.splitext(file_path)[1]}"
-    with open(output_file_name, 'w', encoding='utf-8') as out_file:
-        out_file.write(in_result)
+        result += "loadstring(\""
+        for j in data_two:
+            result += f"\\x{j:02X}"
+        result += "\")()"
+        
+        output_file_name = f"{os.path.splitext(file_path)[0]} - JitTools (J){os.path.splitext(file_path)[1]}"
+        pathlib.Path(output_file_name).write_text(result)
 
     tk.messagebox.showinfo("Joiner", f"Успешно сохранено в файл {os.path.basename(output_file_name)}.")
