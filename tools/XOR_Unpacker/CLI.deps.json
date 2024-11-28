@@ -1,0 +1,33 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "CLI/1.0.0": {
+        "runtime": {
+          "CLI.dll": {}
+        }
+      },
+      "XOR Unpacker/1.0.0": {
+        "runtime": {
+          "XOR Unpacker.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CLI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "XOR Unpacker/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

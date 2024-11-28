@@ -1,0 +1,143 @@
+Question: Максимально количество мест на 5 серверах?. Answer: 5000
+Question: Что соляной шахте?. Answer: Соль
+Question: Пять minus четыре?. Answer: Один
+Question: Валюта США. Answer: Dollars
+Question: Восемь plus три?. Answer: 11
+Question: 3 plus 5. Answer: 8
+Question: Восемь plus 5?. Answer: 13
+Question: Сладкий фрукт. Answer: Персик
+Question: Первое лицо Штата?. Answer: Президент
+Question: Документ выдается в больнице. Answer: Медицинская карта
+Question: Скорострельное оружие?. Answer: Миниган
+Question: Что растет на земле?. Answer: Арбузы
+Question: Десять minus шесть?. Answer: Четыре
+Question: Холодное оружие?. Answer: Нож
+Question: Когда тает лед образуется. Answer: Вода
+Question: Игра с волейбольным  мячом?. Answer: Валейбол
+Question: Время года когда идут первый раз в школу. Answer: Осень
+Question: Транспорт передвигающийся по рельсам. Answer: Трамвай
+Question: Кто главный в Армии?. Answer: Министр Обороны
+Question: Хранилище еды?. Answer: Продуктовый склад
+Question: 6 minus Dva. Answer: 4
+Question: Головной убор?. Answer: Панама
+Question: Четырехколесный транспорт?. Answer: Грузовик
+Question: Средство для переговоров. Answer: Рация
+Question: Гамбургер это?. Answer: Пища
+Question: 17 minus Tri. Answer: Четырнадцать
+Question: 22 plus 4. Answer: Двадцать шесть
+Question: Сколько на двух ногах?. Answer: Десять
+Question: Двухколесный транспорт?. Answer: Мопед
+Question: Шкаф нужен для. Answer: Одежды
+Question: Сколько часов в сутках?. Answer: 24
+Question: Что из ниже перечисленного относится к цитрусам?. Answer: Апельсин
+Question: Сколько будет 10 умножить на 10?. Answer: 100
+Question: На что спящий человек кладет голову во время сна?. Answer: Подушка
+Question: Сколько городов в GTA San Andreas?. Answer: Тpи
+Question: В какую игру вы сейчас играете?. Answer: GTA SAMP
+Question: На какой планете живут Марсиане?. Answer: Марс
+Question: Какой месяц идет после Января?. Answer: Февраль
+Question: Сколько букв в слове Завод?. Answer: Пять
+Question: Сколько букв в слове Экстракт?. Answer: 8
+Question: Президентом какой страны является Владимир Владимирович Пути. Answer: Россия
+Question: Сколько ножек у стула?. Answer: Чeтырe
+Question: Столица России это?. Answer: Москва
+Question: Как называется праздник который празднуют 23 февраля?. Answer: День защитника отечества
+Question: Что снизу Вашего персонажа?. Answer: Ноги
+Question: Сколько букв в имени TANYA. Answer: 5
+Question: Что такое GTA SAMP?. Answer: Игра
+Question: В какую игру Вы сейчас играете?. Answer: GTA SAMP
+Question: Сколько букв в имени ROMEO. Answer: 5
+Question: Отметьте цифру 15. Answer: 15
+Question: Какой сейчас год?. Answer: 2018
+Question: Какое время года идёт после зимы?. Answer: Весна
+Question: Когда наступает Новый Год?. Answer: 1 января
+Question: Сколько будет 1 плюс 8?. Answer: 9
+Question: Выбери Не правильный вариант. Answer: Не правильный вариант
+Question: Какое растение хорошо переносит засуху?. Answer: Кактус
+Question: У какой птицы самое острое зрение?. Answer: У орла
+Question: Какое животное говорит Хрю?. Answer: Свинка
+Question: Какое животное говорит Кря?. Answer: Уточка
+Question: Когда падает снег?. Answer: Зимой
+Question: В каком месяце года Майские праздники?. Answer: В Маю
+Question: Какое животное говорит Гав?. Answer: Собака
+Question: Сколько будет 4 плюс 4?. Answer: 8
+Question: Сколько будет 3 плюс 4?. Answer: 7
+Question: Куда Дед Мороз оставляет подарки в Новый Год?. Answer: Под ёлку
+Question: Когда листья желтеют и опадают?. Answer: Осенью
+Question: Сколько раз в день необходимо чистить зубы?. Answer: Два
+Question: Сколько месяцев в году. Answer: 12
+Question: Самая плохая оценка в школе это. Answer: Два
+Question: Правильный ответ на пример 2 плюс шесть?. Answer: 8
+Question: Правильный ответ на пример 6 минус 3?. Answer: 3
+Question: Выберите слово КИТ. Answer: Кит
+Question: Сколько ногтей на пяти пальцах?. Answer: Пять
+Question: Чем облизывает человек?. Answer: Языком
+Question: С помощью чего ходит здоровый человек?. Answer: С помощью ног
+Question: Сколько будет два плюс пять?. Answer: 7
+Question: Чем видит человек окружающий мир?. Answer: Глазами
+Question: Что растет на голове?. Answer: Волосы
+Question: Сколько всего часов в одном дне?. Answer: 24
+Question: Чем слышит человек других людей?. Answer: Ушами
+Question: Какого цвета трава?. Answer: Зеленая
+Question: На чем сидите?. Answer: На Машине
+Question: Сколько будет два плюс три?. Answer: Пять
+Question: Какого цвета натуральная ёлка?. Answer: Зелёная
+Question: Какая из организаций является нелегальной?. Answer: Колумбийская мафия
+Question: Какой натуральный цвета снега?. Answer: Белый
+Question: Какой сейчас год?. Answer: 2018
+Question: Какой цвет у логотипа Radiant? . Answer: Жёлтый
+Question: Цвет солнца?. Answer: Жёлтый
+Question: Сколько будет 2 плюс 2 умножить на 2?. Answer: 6
+Question: Первая буква русского алфавита?. Answer: А
+Question: Сколько дней в августе?. Answer: 31
+Question: Что из перечисленного не является временем года?. Answer: Коробка
+Question: Когда сутки длиннее зимой весной или летом ?. Answer: Везде одинаково
+Question: Что из перечисленного является маркой телефона?. Answer: Samsung
+Question: Полный вариант имени Саша. Answer: Александр
+Question: Синоним слово красивый. Answer: Чудесный
+Question: Антоним слова зло?. Answer: Добро
+Question: Какая из перечисленных работ не является гос организацией?. Answer: Байкеры
+Question: Чего не может торнадо?. Answer: Стоять на месте
+Question: Сколько колес у машины?. Answer: 4
+Question: Сколько будет один плюс один. Answer: Два
+Question: Как называется восьмой месяц года. Answer: Август
+Question: Когда 1 сентября?. Answer: Осенью
+Question: Последняя буква алфавита. Answer: Я
+Question: Разрешено ли использовать читы на сервере. Answer: Нет
+Question: Наука о расстениях. Answer: Ботаника
+Question: Сколько месяцев в году?. Answer: 12
+Question: Что дает корова?. Answer: Молоко
+Question: Мальчик который ходит в школу. Answer: Ученик
+Question: Разрешено ли использовать багоюз на сервере. Answer: Нет
+Question: Сколько зубов у человека. Answer: 32
+Question: Какой сейчас год?. Answer: 2018
+Question: Первая буква алфавита. Answer: А
+Question: Когда новый год?. Answer: Зимой
+Question: Выберите правильный ответ. Answer: Правильный ответ
+Question: Человек играющий на пианино. Answer: Пианист
+Question: Сколько максимально мест на сервере. Answer: 1000
+Question: Кто делает Гав Гав. Answer: Собака
+Question: Сколько дней в году?. Answer: 365
+Question: Сколько дней в недели. Answer: 7
+Question: Кто делает Мяу Мяу. Answer: Кошка
+Question: Женщина играющая в теннис. Answer: Теннисистка
+Question: Сколько часов в одном дне. Answer: 24 часа
+Question: Кто из списка лишний ?. Answer: Дом
+Question: Какого цвета трава ?. Answer: Зеленый 
+Question: Слово состоящее из Ля и Гушка?. Answer: Лягушка
+Question: Прибор для измерения времени ?. Answer: Часы
+Question: Сколько будет 2 плюс 2 ?. Answer: 4
+Question: Какой игры мультиплеер вы играете?. Answer: GTA San Andreas
+Question: Кто делает гав гав ?. Answer: Собака
+Question: Сколько пальцев на руке ?. Answer: 5
+Question: Что такое DeatMatch ?. Answer: Убивать всех подряд без причины
+Question: Кто делает мяу мяу ?. Answer: Кот
+Question: Какое количество мест на нашем сервере ?. Answer: 1000
+Question: Что делают в больнице ?. Answer: Лечат
+Question: Как называется наш проект ?. Answer: Даймонд
+Question: Кто был Бессмертным?. Answer: Кощей
+Question: Какой банды не существует на сервере?. Answer: Грифоны
+Question: У какой геометрической фигуры нет углов?. Answer: Круг
+Question: Сколько городов на сервере?. Answer: 3
+Question: Какое слово состоит из 3 букв?. Answer: Три
+Question: Что делают собаки ?. Answer: Гавкают 
