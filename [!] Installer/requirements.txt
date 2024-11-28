@@ -1,6 +1,0 @@
-requests
-pathlib
-argparse
-customtkinter
-pyperclip
-configparser
