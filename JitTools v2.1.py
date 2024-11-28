@@ -41,11 +41,15 @@ try:
     import modules.compiler
     import modules.instruct
 
-    customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
-    customtkinter.set_default_color_theme("gui/theme.json")  # Themes: "blue" (standard), "dark-blue", "green"
+    customtkinter.set_appearance_mode("System")
+    theme = customtkinter.get_appearance_mode()
+    if theme == "Dark":
+        customtkinter.set_default_color_theme("gui/theme.json")
+    else:
+        customtkinter.set_default_color_theme("gui/theme_light.json")
 
     internet_available = False
-    version = os.path.splitext(os.path.basename(sys.argv[0]))[0].split("v")[1].split()[0]
+    version = os.path.splitext(os.path.basename(sys.argv[0]))[0].split("v")[1]
 
     class App(customtkinter.CTk):
         def __init__(self):
@@ -62,18 +66,18 @@ try:
 
             self.iconbitmap("gui/icon.ico")
             
-            if len(sys.argv) > 1:
+            if len(sys.argv) > 1 and os.path.splitext(sys.argv[1])[1].lower() in ['.lua', '.luac', '.txt']:
                 file_path = sys.argv[1]
-                self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
-
+                self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
+               
                 # decompiler
                 if config['Checkbox'].getint('decompiler_luajit_fork') == 1:
-                    result = tkinter.messagebox.askyesno("Декомпиляция", "Применить декомпилятор LuaJIT Fork?")
+                    result = tkinter.messagebox.askyesno(lang["decompilation"], f"{lang['apply_decompiler']} LuaJIT Fork?")
                     if result:
                         modules.decompiler.ljd_decompiler(file_path)
 
                 elif config['Checkbox'].getint('decompiler_python_fork') == 1:
-                    result = tkinter.messagebox.askyesno("Декомпиляция", "Применить декомпилятор Python Fork?")
+                    result = tkinter.messagebox.askyesno(lang["decompilation"], f"{lang['apply_decompiler']} Python Fork?")
                     if result:
                         modules.decompiler.py_decompiler(file_path)
                     
@@ -93,13 +97,13 @@ try:
             self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="JitTools GUI", font=customtkinter.CTkFont(size=20, weight="bold"))
             self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, command=self.btn1_event, text="Декомпиляция")
+            self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, command=self.btn1_event, text=lang["decompilation"])
             self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=7)
 
-            self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, command=self.btn2_event, text="Деобфускация")
+            self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, command=self.btn2_event, text=lang["deobfuscation"])
             self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=7)
 
-            self.sidebar_button_3 = customtkinter.CTkButton(self.sidebar_frame, command=self.btn3_event, text="Анализ кода")
+            self.sidebar_button_3 = customtkinter.CTkButton(self.sidebar_frame, command=self.btn3_event, text=lang["code_analysis"])
             self.sidebar_button_3.grid(row=3, column=0, padx=20, pady=7)
 
             self.sidebar_button_1.invoke()
@@ -112,24 +116,24 @@ try:
             self.tabview = customtkinter.CTkTabview(self, width=500)
             self.tabview.grid(row=0, column=1, rowspan=4, sticky="nsew")
             
-            self.tabview.add("Декомпилятор")
-            self.tabview.add("Анпротектор")
+            self.tabview.add(lang["decompiler"])
+            self.tabview.add(lang["unprotector"])
             
-            for tab in ["Декомпилятор", "Анпротектор"]:
+            for tab in [lang["decompiler"], lang["unprotector"]]:
                 self.tabview.tab(tab).grid_columnconfigure(0, weight=1)
 
 
-            self.optionmenu_1 = customtkinter.CTkOptionMenu(self.tabview.tab("Декомпилятор"), command=self.combo_event, dynamic_resizing=True,\
+            self.optionmenu_1 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["decompiler"]), command=self.combo_event, dynamic_resizing=True,\
                                                              values=["LuaJIT Fork", "Python Fork"])
             self.optionmenu_1.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.button_tab_1 = customtkinter.CTkButton(self.tabview.tab("Декомпилятор"), 
+            self.button_tab_1 = customtkinter.CTkButton(self.tabview.tab(lang["decompiler"]), 
                                                           command=lambda: self.decompile_event(), 
-                                                          text="Запустить", width=100)
+                                                          text=lang["start"], width=100)
             self.button_tab_1.grid(row=1, column=0, padx=20, pady=(2))
 
-            self.checkbox_1 = customtkinter.CTkCheckBox(self.tabview.tab("Декомпилятор"), command=lambda: self.checkbox_event(), text="Применять ко всем скриптам")
-            self.checkbox_1.grid(row=2, column=0, padx=20, pady=(8))
+            self.checkbox_1 = customtkinter.CTkCheckBox(self.tabview.tab(lang["decompiler"]), command=lambda: self.checkbox_event(), text=lang["checkbox_name"])
+            self.checkbox_1.grid(row=2, column=0, padx=20, pady=(12))
 
 
             config.read('JitTools.ini')
@@ -143,13 +147,13 @@ try:
             self.checkbox_1.select() if is_checked else self.checkbox_1.deselect()
 
 
-            self.optionmenu_2 = customtkinter.CTkOptionMenu(self.tabview.tab("Анпротектор"), dynamic_resizing=True,
+            self.optionmenu_2 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["unprotector"]), dynamic_resizing=True,
                                                              values=["Unprot v2.1"])
             self.optionmenu_2.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.button_tab_2 = customtkinter.CTkButton(self.tabview.tab("Анпротектор"), 
+            self.button_tab_2 = customtkinter.CTkButton(self.tabview.tab(lang["unprotector"]), 
                                                           command=lambda: self.unprot_event(), 
-                                                          text="Запустить", width=100)
+                                                          text=lang["start"], width=100)
             self.button_tab_2.grid(row=1, column=0, padx=20, pady=(2))
 
 
@@ -160,7 +164,7 @@ try:
                 config.write(configfile)
 
             if not 'decompiler_luajit_fork' in config['Checkbox'] or not 'decompiler_python_fork' in config['Checkbox']:
-                tkinter.messagebox.showinfo("JitTools", "Данная функция будет работать на все скрипты, перемещенные при помощи Drag&Drop, или указанные в аргумент командной строки.")
+                tkinter.messagebox.showinfo("JitTools", lang["checkbox_description"])
 
         def combo_event(self, _):
             config.read('JitTools.ini')
@@ -177,11 +181,11 @@ try:
             if len(sys.argv) > 1:
                 file_path = sys.argv[1]
             else:
-                file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                 if not file_path:
                     sys.exit()
 
-            self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+            self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
 
             if self.optionmenu_1.get() == "LuaJIT Fork":
                 modules.decompiler.ljd_decompiler(file_path)
@@ -193,11 +197,11 @@ try:
             if len(sys.argv) > 1:
                 file_path = sys.argv[1]
             else:
-                file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                 if not file_path:
                     sys.exit()
 
-            self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+            self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
 
             if self.optionmenu_2.get() == "Unprot v2.1":
                 modules.unprot.unprot_2(file_path)
@@ -211,25 +215,25 @@ try:
             self.tabview = customtkinter.CTkTabview(self, width=500)
             self.tabview.grid(row=0, column=1, rowspan=4, sticky="nsew")
 
-            self.tabview.add("Запуск кода")
-            self.tabview.add("Деобфускация")
+            self.tabview.add(lang["running_code"])
+            self.tabview.add(lang["deobfuscation"])
 
-            for tab in ["Запуск кода", "Деобфускация"]:
+            for tab in [lang["running_code"], lang["deobfuscation"]]:
                 self.tabview.tab(tab).grid_columnconfigure(0, weight=1)
 
-            self.optionmenu_1 = customtkinter.CTkOptionMenu(self.tabview.tab("Запуск кода"), dynamic_resizing=True,
+            self.optionmenu_1 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["running_code"]), dynamic_resizing=True,
                                                             values=["Moonsec Dump", "Hook Obf", "Debugger", "XOR Unpack"])
             self.optionmenu_1.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.button_tab_1 = customtkinter.CTkButton(self.tabview.tab("Запуск кода"), command=lambda: self.debug_event(), text="Запустить", width=100)
+            self.button_tab_1 = customtkinter.CTkButton(self.tabview.tab(lang["running_code"]), command=lambda: self.debug_event(), text=lang["start"], width=100)
             self.button_tab_1.grid(row=1, column=0, padx=20, pady=2)
 
 
-            self.optionmenu_2 = customtkinter.CTkOptionMenu(self.tabview.tab("Деобфускация"), dynamic_resizing=True,
+            self.optionmenu_2 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["deobfuscation"]), dynamic_resizing=True,
                                                             values=["Base64 Deobf", "Shit Deobf"])
             self.optionmenu_2.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.button_tab_2 = customtkinter.CTkButton(self.tabview.tab("Деобфускация"), command=lambda: self.deobf_event(), text="Запустить", width=100)
+            self.button_tab_2 = customtkinter.CTkButton(self.tabview.tab(lang["deobfuscation"]), command=lambda: self.deobf_event(), text=lang["start"], width=100)
             self.button_tab_2.grid(row=1, column=0, padx=20, pady=2)
 
         def btn3_event(self):
@@ -240,34 +244,34 @@ try:
             self.tabview = customtkinter.CTkTabview(self, width=500)
             self.tabview.grid(row=0, column=1, rowspan=4, sticky="nsew")
 
-            self.tabview.add("Компиляция")
-            self.tabview.add("Инструкции")
-            self.tabview.add("Веб-инструменты")
+            self.tabview.add(lang["compilation"])
+            self.tabview.add(lang["instructions"])
+            self.tabview.add(lang["web_tools"])
 
-            for tab in ["Компиляция", "Инструкции", "Веб-инструменты"]:
+            for tab in [lang["compilation"], lang["instructions"], lang["web_tools"]]:
                 self.tabview.tab(tab).grid_columnconfigure(0, weight=1)
 
-            self.optionmenu_1 = customtkinter.CTkOptionMenu(self.tabview.tab("Компиляция"), dynamic_resizing=True,
+            self.optionmenu_1 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["compilation"]), dynamic_resizing=True,
                                                             values=["LuaJIT Compiler", "Joiner"])
             self.optionmenu_1.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.button_tab_1 = customtkinter.CTkButton(self.tabview.tab("Компиляция"), command=lambda: self.compile_event(), text="Запустить", width=100)
+            self.button_tab_1 = customtkinter.CTkButton(self.tabview.tab(lang["compilation"]), command=lambda: self.compile_event(), text=lang["start"], width=100)
             self.button_tab_1.grid(row=1, column=0, padx=20, pady=2)
 
 
-            self.optionmenu_2 = customtkinter.CTkOptionMenu(self.tabview.tab("Инструкции"), dynamic_resizing=True,
+            self.optionmenu_2 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["instructions"]), dynamic_resizing=True,
                                                             values=["Luad", "BCViewer", "ASM"])
             self.optionmenu_2.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.button_tab_2 = customtkinter.CTkButton(self.tabview.tab("Инструкции"), command=lambda: self.instruct_event(), text="Запустить", width=100)
+            self.button_tab_2 = customtkinter.CTkButton(self.tabview.tab(lang["instructions"]), command=lambda: self.instruct_event(), text=lang["start"], width=100)
             self.button_tab_2.grid(row=1, column=0, padx=20, pady=2)
 
 
-            self.optionmenu_3 = customtkinter.CTkOptionMenu(self.tabview.tab("Веб-инструменты"), dynamic_resizing=True,
+            self.optionmenu_3 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["web_tools"]), dynamic_resizing=True,
                                                             values=["LuaJIT Scanner", "HexEd.it", "Lua Beautify", "Lua Online"])
             self.optionmenu_3.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-            self.button_tab_3 = customtkinter.CTkButton(self.tabview.tab("Веб-инструменты"), command=lambda: self.web_event(), text="Открыть", width=100)
+            self.button_tab_3 = customtkinter.CTkButton(self.tabview.tab(lang["web_tools"]), command=lambda: self.web_event(), text=lang["open"], width=100)
             self.button_tab_3.grid(row=1, column=0, padx=20, pady=2)
 
         def web_event(self):
@@ -283,11 +287,11 @@ try:
             if len(sys.argv) > 1:
                 file_path = sys.argv[1]
             else:
-                file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                 if not file_path:
                     sys.exit()
 
-            self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+            self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
 
             if self.optionmenu_1.get() == "Moonsec Dump":
                 modules.debug.moonsecdump(file_path)
@@ -303,33 +307,33 @@ try:
 
         def deobf_event(self):
             if self.optionmenu_2.get() == "Base64 Deobf":
-                input = tkinter.simpledialog.askstring("B64", "Введите зашифрованный код: ")
+                input = tkinter.simpledialog.askstring("B64", f"{lang['enter_encrypted_code']}: ")
                 if len(input) < 1:
-                    tkinter.messagebox.showinfo("B64", "Вы ничего не ввели.")
+                    tkinter.messagebox.showinfo("B64", lang["empty_input"])
                 else:
                     modules.deobf.base64d(input)
-                    tkinter.messagebox.showinfo("Base64 Deobf", "Успешно сохранено в файл Decode - JitTools (B64).txt")
+                    tkinter.messagebox.showinfo("B64", f"{lang["saved_to_file"]}: Decode - JitTools (B64).txt")
 
             elif self.optionmenu_2.get() == "Shit Deobf":
                 if len(sys.argv) > 1:
                     file_path = sys.argv[1]
                 else:
-                    file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                    file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                     if not file_path:
                         sys.exit()
 
-                self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+                self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
                 modules.deobf.shitd(file_path)
 
         def compile_event(self):
             if len(sys.argv) > 1:
                 file_path = sys.argv[1]
             else:
-                file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                 if not file_path:
                     sys.exit()
 
-            self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+            self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
 
             if self.optionmenu_1.get() == "LuaJIT Compiler":
                 modules.compiler.compiler(file_path)
@@ -342,22 +346,22 @@ try:
                 if len(sys.argv) > 1:
                     file_path = sys.argv[1]
                 else:
-                    file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                    file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                     if not file_path:
                         sys.exit()
 
-                self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+                self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
                 modules.instruct.bcviewer(file_path)
 
             elif self.optionmenu_2.get() == "Luad":
                 if len(sys.argv) > 1:
                     file_path = sys.argv[1]
                 else:
-                    file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                    file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                     if not file_path:
                         sys.exit()
 
-                self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+                self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
 
 
                 file_path = sys.argv[1]
@@ -367,17 +371,18 @@ try:
                     new_file_path = base + '.luac'
                     os.rename(file_path, new_file_path)
 
-                modules.instruct.luad()
+                modules.instruct.luad(file_path, ext)
+
 
             elif self.optionmenu_2.get() == "ASM":
                 if len(sys.argv) > 1:
                     file_path = sys.argv[1]
                 else:
-                    file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                    file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
                     if not file_path:
                         sys.exit()
 
-                self.title(f"JitTools v{version} - {os.path.basename(file_path)}")
+                self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
                 modules.instruct.asm(file_path)
 
 
@@ -401,6 +406,63 @@ try:
 
         root = tkinter.Tk()
         config = ConfigParser()
+                    
+        windll.kernel32.GetUserDefaultUILanguage.restype = c_long
+        windll.kernel32.GetUserDefaultUILanguage.argtypes = []
+        language_id = windll.kernel32.GetUserDefaultUILanguage()
+
+        if language_id == 1049:
+            lang = {
+                "error": "Ошибка JitTools",
+                "error_desc": "Произошла ошибка",
+                "error_desc_info": "Информация об ошибке скопирована в буфер обмена. Передайте ее разработчику!",
+                "update_title": "Доступна новая версия JitTools",
+                "update_info": "Открыть страницу загрузки",
+                "select_file": "Выберите файл",
+                "select_to_file": "Успешно сохранено в файл",
+                "empty_input": "Вы ничего не ввели",
+                "enter_encrypted_code": "Введите зашифрованный код",
+                "web_tools": "Веб-инструменты",
+                "start": "Запустить",
+                "open": "Открыть",
+                "instructions": "Инструкции",
+                "compilation": "Компиляция",
+                "deobfuscation": "Деобфускация",
+                "running_code": "Запуск кода",
+                "code_analysis": "Анализ кода",
+                "checkbox_description": "Эта функция будет работать с скриптами, перемещенными при помощи Drag&Drop или в аргументе командной строки.",
+                "unprotector": "Анпротектор",
+                "decompiler": "Декомпилятор",
+                "decompilation": "Декомпиляция",
+                "checkbox_name": "Применить ко всем скриптам",
+                "apply_decompiler": "Применить декомпилятор",
+            }
+        else:
+            lang = {
+                "error": "Error JitTools",
+                "error_desc": "An error has occurred",
+                "error_desc_info": "The debugging information has been copied to the clipboard. Send it to the developer!",
+                "update_title": "A new version of JitTools is available",
+                "update_info": "Open the download page",
+                "select_file": "Select a file",
+                "select_to_file": "Successfully saved to file",
+                "empty_input": "Empty input",
+                "enter_encrypted_code": "Enter encrypted code",
+                "web_tools": "Web Tools",
+                "start": "Start",
+                "open": "Open",
+                "instructions": "Instructions",
+                "compilation": "Compilation",
+                "deobfuscation": "Deobfuscation",
+                "running_code": "Running Code",
+                "code_analysis": "Code Analysis",
+                "checkbox_description": "This function will work with all scripts moved using Drag&Drop or in response to a command line argument.",
+                "unprotector": "Unprotector",
+                "decompiler": "Decompiler",
+                "decompilation": "Decompilation",
+                "checkbox_name": "Apply to all scripts",
+                "apply_decompiler": "Apply decompiler",
+            }
 
         # проверка наличия интернета и новой версии (авто-обновления нету)
         try:
@@ -414,8 +476,8 @@ try:
             if float(new_version) > float(version):
                 root.withdraw()
                 response = tkinter.messagebox.askyesno(
-                    "Доступно обновление",
-                    f"Доступна новая версия JitTools v{new_version}\n\n{log}\n\nОткрыть страницу загрузки?"
+                    lang["update_title"],
+                    f"{lang["update_title"]} v{new_version}\n\n{log}\n\n{lang['update_info']}?"
                 )
                 if response:
                     open_browser("https://github.com/untitled-1111/JitTools/releases")
@@ -444,6 +506,6 @@ except Exception as e:
     from pyperclip import copy
     copy(debug_text)
 
-    tkinter.messagebox.showinfo("Ошибка JitTools", f"Произошла ошибка:\n[{e.__traceback__.tb_lineno}]: {e} \n\nОтладочная информация скопирована в буфер обмена, отправьте ее разработчику!")
+    tkinter.messagebox.showinfo(lang["error"], f"{lang["error_desc"]}:\n[{e.__traceback__.tb_lineno}]: {e} \n\n{lang['error_desc_info']}")
     windll.user32.ShowWindow(hwnd, 1) # SW_NORMAL
     sys.exit()

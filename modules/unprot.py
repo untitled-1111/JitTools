@@ -4,12 +4,28 @@ import os
 import sys
 import pathlib
 import tkinter as tk
+from ctypes import windll, c_long
+
+windll.kernel32.GetUserDefaultUILanguage.restype = c_long
+windll.kernel32.GetUserDefaultUILanguage.argtypes = []
+language_id = windll.kernel32.GetUserDefaultUILanguage()
+
+if language_id == 1049:
+    lang = {
+        "error_compiled": "не является скомпилированным LuaJIT скриптом",
+        "saved": "Успешно сохранено в файл",
+    }
+else:
+    lang = {
+        "error_compiled": "is not a compiled LuaJIT script",
+        "saved": "Successfully saved to file",
+    }
 
 def unprot_2(path):
   with open(path, 'rb') as f:
     data = f.read(3)
     if data != b'\x1B\x4C\x4A': # magic bytes
-      tk.messagebox.showerror("Unprot v2.1", f"{os.path.basename(path)} не является скомпилированным LuaJIT скриптом.")
+      tk.messagebox.showerror("Unprot v2.1", f"{os.path.basename(path)} {lang['error_compiled']}.")
     else:
         script = LuaJIT(path)
         basename = os.path.basename(path)
@@ -70,7 +86,7 @@ def unprot_2(path):
                 continue   
             proto_num += 1
         pathlib.Path(save_to).write_bytes(script.data)
-        tk.messagebox.showinfo("Unprot v2.1", f"Успешно сохранено в файл {saved_as}.")
+        tk.messagebox.showinfo("Unprot v2.1", f"{lang['saved']}: {saved_as}.")
     
 ret_opcodes = [0x49, 0x4A, 0x4B, 0x4C, 0x43, 0x44]
 

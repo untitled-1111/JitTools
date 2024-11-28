@@ -4,11 +4,35 @@ import os
 import tkinter as tk
 import subprocess
 import re
+from ctypes import windll, c_long
+
+windll.kernel32.GetUserDefaultUILanguage.restype = c_long
+windll.kernel32.GetUserDefaultUILanguage.argtypes = []
+language_id = windll.kernel32.GetUserDefaultUILanguage()
+
+if language_id == 1049:
+    lang = {
+        "error_desc": "Произошла ошибка",
+        "warning_1": "открывает скрипт на вашем компьютере, делая вас уязвимым к взлому",
+        "warning_2": "Он должен быть использован в изолированном пространстве",
+        "warning_3": "Вы уверены, что хотите открыть",
+        "warning_4": "(да/нет)",
+        "dumps_saved": "Дампы успешно сохранены в папке",
+    }
+else:
+    lang = {
+        "error_desc": "An error has occurred",
+        "warning_1": "opens a script on your computer, leaving you vulnerable to hacking",
+        "warning_2": "It must be used in an isolated space",
+        "warning_3": "Are you sure you want to open",
+        "warning_4": "(yes/no)",
+        "dumps_saved": "Dumps successfully saved in folder",
+    }
 
 def moonsecdump(path):
-  result = tk.messagebox.askyesno("Moonsec Dumper", "[!] Dumper открывает скрипт на вашем ПК, из-за чего вы будете уязвимы для взлома\n"
-                                            "Его необходимо использовать в изолированном пространстве.\n"
-                                            "Вы уверены, что хотите открыть Dumper? (да/нет)")
+  result = tk.messagebox.askyesno("Moonsec Dumper", f"[!] Dumper {lang["warning_1"]}\n"
+                                            f"{lang['warning_2']}.\n"
+                                            f"{lang['warning_3']} Dumper? {lang['warning_4']}")
             
   if result:
       private_roflan = """local function MoonSecHook()
@@ -167,16 +191,16 @@ MoonSecHook();"""
       if stderr:
           match = re.search(r'(?P<file>.*)\:(?P<line>\d+)\:(?P<msg>.*)', stderr)
           if match:
-              tk.messagebox.showerror("Dumper", f"Прозиошла ошибка: \n[{match.group('line')}]{match.group('msg')}")
+              tk.messagebox.showerror("Dumper", f"{lang['error_desc']}: \n[{match.group('line')}]{match.group('msg')}")
           else:
-              tk.messagebox.showinfo("Dumper", f"Дампы успешно сохранены в папку: {os.path.dirname(path)}")
+              tk.messagebox.showinfo("Dumper", f"{lang["dumps_saved"]}: {os.path.dirname(path)}")
       else:
-        tk.messagebox.showinfo("Dumper", f"Дампы успешно сохранены в папку: {os.path.dirname(path)}.")
+        tk.messagebox.showinfo("Dumper", f"{lang["dumps_saved"]}: {os.path.dirname(path)}.")
 
 def hookobf(path):
-    result = tk.messagebox.askyesno("Hook Obf", "[!] Hook Obf открывает скрипт на вашем ПК, из-за чего вы будете уязвимы для взлома\n"
-                                            "Его необходимо использовать в изолированном пространстве.\n"
-                                            "Вы уверены, что хотите открыть Hook Obf? (да/нет)")
+    result = tk.messagebox.askyesno("Hook Obf", f"[!] Hook Obf {lang['warning_1']}\n"
+                                            f"{lang['warning_2']}.\n"
+                                            f"{lang['warning_3']} Hook Obf? {lang['warning_4']}")
     
     if result:
       file_path_abs = os.path.abspath(path)
@@ -184,21 +208,21 @@ def hookobf(path):
           f' tools{os.sep}Hook_Obfuscation{os.sep}main.lua "{file_path_abs}"')
 
 def debugger(path):
-    result = tk.messagebox.askyesno("Debugger", "[!] Debugger открывает скрипт на вашем ПК, из-за чего вы будете уязвимы для взлома\n"
-                                            "Его необходимо использовать в изолированном пространстве.\n"
-                                            "Вы уверены, что хотите открыть Debugger? (да/нет)")
+    result = tk.messagebox.askyesno("Debugger", f"[!] Debugger {lang['warning_1']}\n"
+                                            f"{lang['warning_2']}.\n"
+                                            f"{lang['warning_3']} Debugger? {lang['warning_4']}")
     
     if result:
       file_path_abs = os.path.abspath(path)
       os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
           f' tools{os.sep}Debugger{os.sep}!0LuaRuntimeChecker.lua "{file_path_abs}"')
 
-      tk.messagebox.showinfo("Debugger", f"Дампы функций могут находиться в этой папке: {os.path.join(os.path.dirname(file_path_abs), 'dumps')}")
+      tk.messagebox.showinfo("Debugger", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs), 'dumps')}")
 
 def xorunpack(path):
-    result = tk.messagebox.askyesno("XOR Unpack", "[!] XOR Unpack открывает скрипт на вашем ПК, из-за чего вы будете уязвимы для взлома\n"
-                                            "Его необходимо использовать в изолированном пространстве.\n"
-                                            "Вы уверены, что хотите открыть XOR Unpack? (да/нет)")
+    result = tk.messagebox.askyesno("XOR Unpack", f"[!] XOR Unpack {lang['warning_1']}\n"
+                                            f"{lang['warning_2']}.\n"
+                                            f"{lang['warning_3']} XOR Unpack? {lang['warning_4']}")
     
     if result:
       file_path_abs = os.path.abspath(path)

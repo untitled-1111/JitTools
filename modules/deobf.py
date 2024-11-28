@@ -4,8 +4,20 @@ import os
 import tkinter as tk
 import re
 import codecs
-import ctypes
-import sys
+from ctypes import windll, c_long
+
+windll.kernel32.GetUserDefaultUILanguage.restype = c_long
+windll.kernel32.GetUserDefaultUILanguage.argtypes = []
+language_id = windll.kernel32.GetUserDefaultUILanguage()
+
+if language_id == 1049:
+    lang = {
+        "saved": "Успешно сохранено в файл",
+    }
+else:
+    lang = {
+        "saved": "Successfully saved to file",
+    }
 
 def base64d(arg):
     os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
@@ -48,7 +60,7 @@ def shitd(file_path):
             offset = entry.end
         out_file.write(data[offset:])
 
-    tk.messagebox.showinfo("Shit Deobfuscation", f"Успешно сохранено в файл {os.path.basename(output_file_name)}.")
+    tk.messagebox.showinfo("Shit Deobfuscation", f"{lang['saved']}: {os.path.basename(output_file_name)}.")
   
 class EncodedEntry:
   def __init__(self, bytes, start, end):
