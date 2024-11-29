@@ -416,7 +416,8 @@ try:
                 "error": "Ошибка JitTools",
                 "error_desc": "Произошла ошибка",
                 "error_desc_info": "Информация об ошибке скопирована в буфер обмена. Передайте ее разработчику!",
-                "update_title": "Доступна новая версия JitTools",
+                "update_title": "Доступно обновление",
+                "update_description": "Доступна новая версия JitTools",
                 "update_info": "Открыть страницу загрузки",
                 "select_file": "Выберите файл",
                 "select_to_file": "Успешно сохранено в файл",
@@ -442,7 +443,8 @@ try:
                 "error": "Error JitTools",
                 "error_desc": "An error has occurred",
                 "error_desc_info": "The debugging information has been copied to the clipboard. Send it to the developer!",
-                "update_title": "A new version of JitTools is available",
+                "update_title": "Update is available",
+                "update_description": "A new version of JitTools is available | ",
                 "update_info": "Open the download page",
                 "select_file": "Select a file",
                 "select_to_file": "Successfully saved to file",
@@ -477,7 +479,7 @@ try:
                 root.withdraw()
                 response = tkinter.messagebox.askyesno(
                     lang["update_title"],
-                    f"{lang["update_title"]} v{new_version}\n\n{log}\n\n{lang['update_info']}?"
+                    f"{lang["update_description"]} v{new_version}\n\n{log}\n\n{lang['update_info']}?"
                 )
                 if response:
                     open_browser("https://github.com/untitled-1111/JitTools/releases")

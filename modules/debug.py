@@ -206,6 +206,8 @@ def hookobf(path):
       file_path_abs = os.path.abspath(path)
       os.system(f'tools{os.sep}Hook_Obfuscation{os.sep}luajit.exe'
           f' tools{os.sep}Hook_Obfuscation{os.sep}main.lua "{file_path_abs}"')
+      
+      tk.messagebox.showinfo("Hook Obf", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs))}")
 
 def debugger(path):
     result = tk.messagebox.askyesno("Debugger", f"[!] Debugger {lang['warning_1']}\n"
