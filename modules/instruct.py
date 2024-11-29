@@ -17,6 +17,7 @@ if language_id == 1049:
         "warning_2": "Он должен быть использован в изолированном пространстве",
         "warning_3": "Вы уверены, что хотите открыть",
         "warning_4": "(да/нет)",
+        "saved": "Успешно сохранено в файл",
     }
 else:
     lang = {
@@ -25,6 +26,7 @@ else:
         "warning_2": "It must be used in an isolated space",
         "warning_3": "Are you sure you want to open",
         "warning_4": "(yes/no)",
+        "saved": "Successfully saved to file",
     }
 
 def bcviewer(path):
