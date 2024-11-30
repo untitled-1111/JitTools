@@ -44,7 +44,7 @@ def editor(path):
 
 def bcviewer(path):
     file_path_abs = os.path.abspath(path)
-    output_file = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}os.sep{os.path.splitext(os.path.basename(path))[0]} - JitTools (BCL).txt"
+    output_file = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}{os.path.splitext(os.path.basename(path))[0]} - JitTools (BCL).txt"
 
     with open(path, 'rb') as f:
         data = f.read(3)
@@ -74,7 +74,7 @@ def luad(file_path, main_ext):
 
 def asm(path):
     file_path_abs = os.path.abspath(path)
-    output = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}os.sep{os.path.splitext(os.path.basename(path))[0]}"
+    output = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}{os.path.splitext(os.path.basename(path))[0]}"
 
     base_filename = os.path.basename(path)
     match = re.search(r'(?P<base>.*) - JitTools \((?P<type>.*)\)\.(?:lua|luac)$', base_filename)
@@ -88,7 +88,7 @@ def asm(path):
                                             f"{lang['warning_3']} ASM? {lang['warning_4']}")
 
     if result:
-        os.system(f'python toolsos.sepDecompiler_and_ASMos.sepmain.py'
+        os.system(f'python tools{os.sep}Decompiler_and_ASM{os.sep}main.py'
             f' --catch_asserts --asm --with-line-numbers --file="{file_path_abs}"'
             f' > "{output_file}"')
 

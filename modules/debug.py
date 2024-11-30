@@ -20,6 +20,7 @@ if language_id == 1049:
         "dumps_saved": "Дампы успешно сохранены в папке",
         "dumps_warning": "Количество файлов превышает 3, удалить все, кроме самого большого?",
         "error_compiled": "Данный файл скомпилирован, дальнейшая работа невозможна.",
+        "error_no_dumps": "Дампы не были созданы.",
     }
 else:
     lang = {
@@ -31,6 +32,7 @@ else:
         "dumps_saved": "Dumps successfully saved in folder",
         "dumps_warning": "The number of files exceeds 3, delete all except the largest?",
         "error_compiled": "This file is compiled, further work is impossible.",
+        "error_no_dumps": "Dumps were not created.",
     }
 
 def moonsecdump(path):
@@ -232,7 +234,10 @@ def hookobf(path):
                 file_to_remove = os.path.join(directory, filename)
                 os.remove(file_to_remove)
 
-      tk.messagebox.showinfo("Hook Obf", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs))}")
+      if not lua_files:
+          tk.messagebox.showerror("Hook Obf", f"{lang['error_no_dumps']}")
+      else:
+        tk.messagebox.showinfo("Hook Obf", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs))}")
 
 def debugger(path):
     result = tk.messagebox.askyesno("Debugger", f"[!] Debugger {lang['warning_1']}\n"
@@ -243,6 +248,11 @@ def debugger(path):
       file_path_abs = os.path.abspath(path)
       os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
           f' tools{os.sep}Debugger{os.sep}!0LuaRuntimeChecker.lua "{file_path_abs}"')
+
+      dumps_dir = os.path.join(os.path.dirname(file_path_abs), 'dumps')
+      files = [f for f in os.listdir(dumps_dir) if not f.endswith('.ini')]
+      if not files:
+          tk.messagebox.showerror("Debugger", f"{lang['error_no_dumps']}")
 
       tk.messagebox.showinfo("Debugger", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs), 'dumps')}")
 

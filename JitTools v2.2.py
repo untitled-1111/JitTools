@@ -41,12 +41,32 @@ try:
     import modules.compiler
     import modules.instruct
 
-    customtkinter.set_appearance_mode("System")
-    theme = customtkinter.get_appearance_mode()
-    if theme == "Dark":
-        customtkinter.set_default_color_theme("gui/theme.json")
-    else:
-        customtkinter.set_default_color_theme("gui/theme_light.json")
+    config = ConfigParser()
+    if not os.path.exists('JitTools.ini'):
+        with open('JitTools.ini', 'w') as f:
+            f.close()
+
+    if not config.has_section('Checkbox'):
+        config.add_section('Checkbox')
+
+    if not config.has_section('Main'):
+        config.add_section('Main')
+
+    config.read('JitTools.ini')
+    theme = config['Main'].get('theme')
+    if theme not in ('Dark', 'Light', 'System'):
+        theme = 'System'
+        config['Main']['theme'] = theme
+
+    if theme != customtkinter.get_appearance_mode:
+        customtkinter.set_appearance_mode(theme)
+        if theme == 'Light':
+            customtkinter.set_default_color_theme("gui/theme_light.json")
+        else:
+            customtkinter.set_default_color_theme("gui/theme.json")
+
+    with open('JitTools.ini', 'w') as f:
+        config.write(f)
 
     internet_available = False
     version = os.path.splitext(os.path.basename(sys.argv[0]))[0].split("v")[1]
@@ -399,7 +419,6 @@ try:
         windll.user32.ShowWindow(hwnd, 2)  # SW_MINIMIZE
 
         root = tkinter.Tk()
-        config = ConfigParser()
                     
         windll.kernel32.GetUserDefaultUILanguage.restype = c_long
         windll.kernel32.GetUserDefaultUILanguage.argtypes = []
@@ -481,13 +500,6 @@ try:
 
         except OSError: # если интернет отсутствует
             pass
-
-        if not os.path.exists('JitTools.ini'):
-            with open('JitTools.ini', 'w') as f:
-                f.close()
-
-        if not config.has_section('Checkbox'):
-            config.add_section('Checkbox')
 
         root.destroy()
         app = App()
