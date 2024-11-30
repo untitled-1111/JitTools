@@ -48,26 +48,7 @@ def install_jittools():
 
         if answer:
             for name, link in links.items():
-                module_name = list(links.keys())[list(links.values()).index(link)]
-                if module_name == ".NET Core 3.1 SDK":
-                    dotnet_version_check_script = """\
-                    reg query "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4" /s | findstr /R "Version"
-                    """
-                    result = run(dotnet_version_check_script, shell=True, stdout=PIPE, stderr=PIPE)
-                    if result.returncode == 0:
-                        print("\033[92mМодуль .NET Core 3.1 SDK уже установлен.\033[0m")
-                        continue
-
-                if module_name == "Visual C++ All-In-One":
-                    vc_version_check_script = """\
-                    reg query "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\VisualStudio\\14.0\\VC\\Runtimes\\x64" /s
-                    """
-                    result = run(vc_version_check_script, shell=True, stdout=PIPE, stderr=PIPE)
-                    if result.returncode == 0:
-                        print("\n\033[92mМодуль Visual C++ All-In-One уже установлен.\033[0m")
-                        continue
-
-                print(f"\n\033[96mЗагрузка {module_name}...\033[0m")
+                print(f"\n\033[96mЗагрузка {name}...\033[0m")
                 file_name = link.split('/')[-1]
 
                 if not path.exists(file_name):
@@ -82,8 +63,8 @@ def install_jittools():
                                 progress = int(downloaded / total_size * 100)
                                 print(f"\r[\033[90m{'#' * progress}\033[0m\033[90m{' ' * (100 - progress)}\033[0m] \033[94m{progress:>2}%\033[0m", end="", flush=True)
 
-                print(f"\n\033[92mМодуль {module_name} успешно загружен.\033[0m")
-                print(f"\033[96mЗапуск {module_name}...\033[0m")
+                print(f"\n\033[92mМодуль {name} успешно загружен.\033[0m")
+                print(f"\033[96mЗапуск {name}...\033[0m")
 
                 windll.shell32.ShellExecuteW(None, "runas", file_name, None, None, 1)
 
