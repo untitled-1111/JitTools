@@ -246,15 +246,26 @@ def debugger(path):
     
     if result:
       file_path_abs = os.path.abspath(path)
-      os.system(f'tools{os.sep}Debugger{os.sep}luajit.exe'
-          f' tools{os.sep}Debugger{os.sep}!0LuaRuntimeChecker.lua "{file_path_abs}"')
 
-      dumps_dir = os.path.join(os.path.dirname(file_path_abs), 'dumps')
+      os.chdir(f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}tools{os.sep}Debugger")
+      os.system(f'luajit.exe'
+          f' !0LuaRuntimeChecker.lua "{file_path_abs}"')
+
+      dumps_dir = os.path.join(f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}tools{os.sep}Debugger', 'dumps')
       files = [f for f in os.listdir(dumps_dir) if not f.endswith('.ini')]
-      if not files:
+      if files:
+          for file in files:
+              file_src = os.path.join(dumps_dir, file)
+              file_dst = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(dumps_dir))), 'dumps', file)
+              with open(file_src, 'rb') as src_file, open(file_dst, 'wb') as dst_file:
+                  dst_file.write(src_file.read())
+              os.remove(file_src)
+
+              tk.messagebox.showinfo("Debugger", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs), 'dumps')}")
+      else:
           tk.messagebox.showerror("Debugger", f"{lang['error_no_dumps']}")
 
-      tk.messagebox.showinfo("Debugger", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs), 'dumps')}")
+      os.chdir(f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}")
 
 def xorunpack(path):
     result = tk.messagebox.askyesno("XOR Unpack", f"[!] XOR Unpack {lang['warning_1']}\n"

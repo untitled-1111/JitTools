@@ -17,10 +17,10 @@ int PlaySound(
 ]]
 
 function getFileNameFromPath(path)
-    return string.match(path, '.+\\(.-)$')  -- Добавлен символ '$' для корректного завершения строки
+    return string.match(path, '.+\\(.-)$')
 end
 function getFileNameFromPathWithoutEx(path)
-    return string.match(path, '.+\\(.+)%..+$')  -- Добавлен символ '$' для корректного завершения строки
+    return string.match(path, '.+\\(.+)%..+$')
 end
 targetName = getFileNameFromPath(arg[1])
 os.setlocale('Russian')
@@ -35,16 +35,12 @@ print("\x1b[35m[SYSTEM] \x1b[37m> Запуск инструмента..", getFileNameFromPath(arg
 
 local registry = debug.getregistry()
 
-local current_dir = debug.getinfo(1, "S").source:match("@(.*/)")
-if not current_dir then current_dir = "./" end
-
-package.path = package.path .. ";" .. current_dir .. "lib/?.lua"
-
 local jit = require 'jit.bc'
 local dumper = require("LRCDumper")(jit)
 
 local function buildProxyFuncs()
-    local code = io.open(current_dir.. "LRCFuncs.lua", "rb"):read("*a"); --получение кода скрипта
+
+    local code = io.open("LRCFuncs.lua", "rb"):read("*a"); --получение кода скрипта
     local proxyInit = loadstring(code) -- попытка загрузить его
 
     if proxyInit then
@@ -178,11 +174,11 @@ if scriptInit ~= nil then
             end
         elseif type(value) == "table" then
             print("\x1b[33m[META] \x1b[37mПолучение информации о таблице", "\x1b[36m")
-            print(ins(value)) -- ку ку   
+            print(ins(value)) -- ку ку
         end
 
         io.read()
-        -- debug.debug()
+        --debug.debug()
       end,
     })
 
