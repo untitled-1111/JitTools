@@ -40,6 +40,7 @@
   - [x] [Joiner](https://www.blast.hk/threads/38714/post-376714)
 
 - Просмотр инструкций
+  - [x] [Bytecode Editor](https://www.blast.hk/threads/224821/)
   - [x] [BCViewer](https://t.me/AkuJla)
   - [x] [Luad](https://github.com/imring/Luad)
   - [x] ASM
