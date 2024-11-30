@@ -35,14 +35,11 @@ print("\x1b[35m[SYSTEM] \x1b[37m> Запуск инструмента..", getFileNameFromPath(arg
 
 local registry = debug.getregistry()
 
--- Получаем текущую директорию скрипта
 local current_dir = debug.getinfo(1, "S").source:match("@(.*/)")
 if not current_dir then current_dir = "./" end
 
--- Добавляем путь к папке lib в package.path
 package.path = package.path .. ";" .. current_dir .. "lib/?.lua"
 
--- Теперь можно подключить необходимые модули
 local jit = require 'jit.bc'
 local dumper = require("LRCDumper")(jit)
 
@@ -181,8 +178,7 @@ if scriptInit ~= nil then
             end
         elseif type(value) == "table" then
             print("\x1b[33m[META] \x1b[37mПолучение информации о таблице", "\x1b[36m")
-            print(ins(value)) -- ку ку
-            print("")
+            print(ins(value)) -- ку ку   
         end
 
         io.read()

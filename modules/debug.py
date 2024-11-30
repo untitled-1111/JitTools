@@ -18,6 +18,8 @@ if language_id == 1049:
         "warning_3": "Вы уверены, что хотите открыть",
         "warning_4": "(да/нет)",
         "dumps_saved": "Дампы успешно сохранены в папке",
+        "dumps_warning": "Количество файлов превышает 3, удалить все, кроме самого большого?",
+        "error_compiled": "Данный файл скомпилирован, дальнейшая работа невозможна.",
     }
 else:
     lang = {
@@ -27,6 +29,8 @@ else:
         "warning_3": "Are you sure you want to open",
         "warning_4": "(yes/no)",
         "dumps_saved": "Dumps successfully saved in folder",
+        "dumps_warning": "The number of files exceeds 3, delete all except the largest?",
+        "error_compiled": "This file is compiled, further work is impossible.",
     }
 
 def moonsecdump(path):
@@ -90,7 +94,7 @@ def moonsecdump(path):
       return function(...)
         local info = debug.getinfo(func, 'S')
         if info and info.source then
-          local string = '[FUNCTION CALL] Функция: ' .. name .. ' Код: ' .. info.source
+          local string = '[FUNCTION CALL] Function: ' .. name .. ' Code: ' .. info.source
           debugInfo('function_call - JitTools (Moonsec).txt', string) 
         end
         return func(...)
@@ -119,15 +123,15 @@ def moonsecdump(path):
 
         __newindex = function(t, key, value)
             if type(value) == 'function' then
-                local string = '[FUNCTION DUMPER] Создана функция: ' .. tostring(key)
+                local string = '[FUNCTION DUMPER] Created function: ' .. tostring(key)
                 debugInfo('functions - JitTools (Moonsec).txt', string) 
                 rawset(t, key, wrapFunction(value, tostring(key)))  
             elseif type(value) == 'table' then
-                local string = '[TABLE DUMPER] Создана таблица: ' .. tostring(key)
+                local string = '[TABLE DUMPER] Created table: ' .. tostring(key)
                 debugInfo('tables - JitTools (Moonsec).txt', string)  
                 rawset(t, key, value) 
             else
-                local string = '[VARIABLE SET] Переменная: ' .. tostring(key) .. ' = ' .. tostring(value)
+                local string = '[VARIABLE SET] Variable: ' .. tostring(key) .. ' = ' .. tostring(value)
                 debugInfo('variables - JitTools (Moonsec).txt', string)  
                 rawset(t, key, value)  
             end
@@ -168,34 +172,38 @@ def moonsecdump(path):
 end
 
 MoonSecHook();"""
-      with open(path, 'r+b') as file:
-          content = file.read()
-          try:
-              file_content = content.decode('utf-8')
-          except UnicodeDecodeError:
-              file_content = content.decode('cp1251')
-          file.seek(0)
-          file.write((private_roflan + file_content).encode('utf-8'))
-
-      file_path_abs = os.path.abspath(path)
-
-      process = subprocess.Popen(
-        [f'tools{os.sep}Debugger{os.sep}luajit.exe', file_path_abs],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        universal_newlines=True
-      )
-
-      stdout, stderr = process.communicate()
-
-      if stderr:
-          match = re.search(r'(?P<file>.*)\:(?P<line>\d+)\:(?P<msg>.*)', stderr)
-          if match:
-              tk.messagebox.showerror("Dumper", f"{lang['error_desc']}: \n[{match.group('line')}]{match.group('msg')}")
+      base_filename = os.path.splitext(os.path.basename(path))[0]
+      output_file_name = f"{base_filename} - JitTools (M){os.path.splitext(os.path.basename(path))[1]}"
+      
+      with open(path, 'rb') as file:
+          data = file.read(3) # читаем 3 байта
+          if data == b'\x1B\x4C\x4A': # если они равны magic байтам (compiled LuaJIT)
+              tk.messagebox.showerror("Dumper", f"{lang['error_compiled']}")
           else:
-              tk.messagebox.showinfo("Dumper", f"{lang["dumps_saved"]}: {os.path.dirname(path)}")
-      else:
-        tk.messagebox.showinfo("Dumper", f"{lang["dumps_saved"]}: {os.path.dirname(path)}.")
+            with open(output_file_name, 'wb') as out_file:
+                file.seek(0) # возвращаемся к 0 байту (началу файла)
+                content = file.read()
+                file_content = content.decode('cp1251')
+                out_file.write((private_roflan + file_content).encode('cp1251'))
+
+                file_path_abs = os.path.abspath(output_file_name)
+                process = subprocess.Popen(
+                  [f'tools{os.sep}Debugger{os.sep}luajit.exe', file_path_abs],
+                  stdout=subprocess.PIPE,
+                  stderr=subprocess.PIPE,
+                  universal_newlines=True
+                )
+
+                stdout, stderr = process.communicate()
+
+                if stderr:
+                    match = re.search(r'(?P<file>.*)\:(?P<line>\d+)\:(?P<msg>.*)', stderr)
+                    if match:
+                        tk.messagebox.showerror("Dumper", f"{lang['error_desc']}: \n[{match.group('line')}]{match.group('msg')}")
+                    else:
+                        tk.messagebox.showinfo("Dumper", f"{lang["dumps_saved"]}: {os.path.dirname(path)}")
+                else:
+                  tk.messagebox.showinfo("Dumper", f"{lang["dumps_saved"]}: {os.path.dirname(path)}.")
 
 def hookobf(path):
     result = tk.messagebox.askyesno("Hook Obf", f"[!] Hook Obf {lang['warning_1']}\n"
@@ -207,6 +215,23 @@ def hookobf(path):
       os.system(f'tools{os.sep}Hook_Obfuscation{os.sep}luajit.exe'
           f' tools{os.sep}Hook_Obfuscation{os.sep}main.lua "{file_path_abs}"')
       
+      directory = os.path.dirname(file_path_abs)
+      pattern = re.compile(r'^.*\[\d+\]\.lua$')
+      lua_files = [f for f in os.listdir(directory) if pattern.match(f)]
+      file_sizes = [os.path.getsize(os.path.join(directory, f)) for f in lua_files]
+
+      if len(lua_files) > 3:
+          result = tk.messagebox.askyesno("Hook Obf", f"{lang['dumps_warning']}")
+          if result:
+            largest_file = lua_files[file_sizes.index(max(file_sizes))]
+            save_path = os.path.join(directory, f"{os.path.splitext(os.path.basename(largest_file))[0]} - JitTools (H).lua")
+            with open(os.path.join(directory, largest_file), "rb") as src_file, open(save_path, "wb") as dst_file:
+                    dst_file.write(src_file.read())
+
+            for filename in lua_files:
+                file_to_remove = os.path.join(directory, filename)
+                os.remove(file_to_remove)
+
       tk.messagebox.showinfo("Hook Obf", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs))}")
 
 def debugger(path):

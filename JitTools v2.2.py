@@ -260,7 +260,7 @@ try:
 
 
             self.optionmenu_2 = customtkinter.CTkOptionMenu(self.tabview.tab(lang["instructions"]), dynamic_resizing=True,
-                                                            values=["Luad", "BCViewer", "ASM"])
+                                                            values=["Bytecode Editor", "Luad", "BCViewer", "ASM"])
             self.optionmenu_2.grid(row=0, column=0, padx=20, pady=(20, 10))
 
             self.button_tab_2 = customtkinter.CTkButton(self.tabview.tab(lang["instructions"]), command=lambda: self.instruct_event(), text=lang["start"], width=100)
@@ -342,28 +342,22 @@ try:
                 modules.compiler.joiner(file_path)
 
         def instruct_event(self):
-            if self.optionmenu_2.get() == "BCViewer":
-                if len(sys.argv) > 1:
-                    file_path = sys.argv[1]
-                else:
-                    file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
-                    if not file_path:
-                        sys.exit()
+            if len(sys.argv) > 1:
+                file_path = sys.argv[1]
+            else:
+                file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
+                if not file_path:
+                    sys.exit()
 
-                self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
+            self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
+
+            if self.optionmenu_2.get() == "Bytecode Editor":
+                modules.instruct.editor(file_path)
+
+            elif self.optionmenu_2.get() == "BCViewer":
                 modules.instruct.bcviewer(file_path)
 
             elif self.optionmenu_2.get() == "Luad":
-                if len(sys.argv) > 1:
-                    file_path = sys.argv[1]
-                else:
-                    file_path = tkinter.filedialog.askopenfilename(title=lang["select_file"], filetypes=[("Lua files", "*.lua;*.luac;*.txt")])
-                    if not file_path:
-                        sys.exit()
-
-                self.title(f"JitTools v{version} - {os.path.splitext(os.path.basename(file_path))[0][:27] + '..' if len(os.path.splitext(os.path.basename(file_path))[0]) > 27 else os.path.splitext(os.path.basename(file_path))[0]}{os.path.splitext(os.path.basename(file_path))[1]}")
-
-
                 file_path = sys.argv[1]
                 base, ext = os.path.splitext(file_path)
 

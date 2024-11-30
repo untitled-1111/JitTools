@@ -184,7 +184,7 @@ if scriptInit ~= nil then
 
     setfenv(scriptInit, metatab)
     local errorHandler = function(error)
-        print("\x1b[31m[ERROR] \x1b[37m", error)
+        print("\x1b[31m \x1b[37m", error)
         local fName = string.match(error, "attempt to call global '(.-)'")
         if fName then
             print("\x1b[33m[META] \x1b[37mНевалидный вызов функции. Установка патча и перезапуск скрипта..", "\x1b[36m")

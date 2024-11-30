@@ -14,11 +14,13 @@ if language_id == 1049:
     lang = {
         "error_compiled": "не является скомпилированным LuaJIT скриптом",
         "saved": "Успешно сохранено в файл",
+        "err_unprot": "Необходимых инструкций не найдено.",
     }
 else:
     lang = {
         "error_compiled": "is not a compiled LuaJIT script",
         "saved": "Successfully saved to file",
+        "err_unprot": "No instructions found.",
     }
 
 def unprot_2(path):
@@ -85,8 +87,14 @@ def unprot_2(path):
                 jump_off += 4
                 continue   
             proto_num += 1
-        pathlib.Path(save_to).write_bytes(script.data)
-        tk.messagebox.showinfo("Unprot v2.1", f"{lang['saved']}: {saved_as}.")
+
+        new_size = len(script.data)
+        old_size = os.path.getsize(path)
+        if new_size != old_size:
+            pathlib.Path(save_to).write_bytes(script.data)
+            tk.messagebox.showinfo("Unprot v2.1", f"{lang['saved']}: {saved_as}.")
+        else:
+            tk.messagebox.showinfo("Unprot v2.1", f"{lang['err_unprot']}")
     
 ret_opcodes = [0x49, 0x4A, 0x4B, 0x4C, 0x43, 0x44]
 
