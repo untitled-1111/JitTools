@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/github/downloads/untitled-1111/JitTools/total?style=for-the-badge&labelColor=%23262626&color=%23212121">
 </a>
 
-# 📸 Интерфейс
+## 📸 Интерфейс
 ![image](https://github.com/user-attachments/assets/2993b56d-e01c-4df9-a147-99674b53b473)
 
 ## 🚀 Использование
