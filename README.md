@@ -5,9 +5,6 @@
     <img src="https://img.shields.io/github/downloads/untitled-1111/JitTools/total?style=for-the-badge&labelColor=%23262626&color=%23212121">
 </a>
 
-## 📸 Интерфейс
-![image](https://github.com/user-attachments/assets/2993b56d-e01c-4df9-a147-99674b53b473)
-
 ## 🚀 Использование
 
 1. Скачать архив из **[последнего релиза](https://github.com/untitled-1111/JitTools/releases/latest)**.
@@ -15,6 +12,10 @@
 3. Установить **Python 3.13** (обязательно с параметром **Add to PATH**).
 4. Запустить **Install JitTools** при помощи Python и следовать инструкциям для установки.
 5. Запуск утилиты происходит с файла **JitTools (версия).py**
+
+## 📸 Интерфейс
+
+![image](https://github.com/user-attachments/assets/2993b56d-e01c-4df9-a147-99674b53b473)
 
 ## 🔍 Функционал
 
