@@ -3,6 +3,8 @@
 import os
 import sys
 import pathlib
+import re
+
 import tkinter as tk
 from ctypes import windll, c_long
 
@@ -30,13 +32,9 @@ def unprot_2(path):
       tk.messagebox.showerror("Unprot v2.1", f"{os.path.basename(path)} {lang['error_compiled']}.")
     else:
         script = LuaJIT(path)
-        basename = os.path.basename(path)
-        fn, ext = os.path.splitext(script.path)
-        save_to = f"{fn} - JitTools (U){ext}"
-        saved_as = os.path.basename(save_to)
-
         protos = script.get_protos()
         proto_num = 0
+
         for proto in reversed(protos):
             proto_start = proto["ins"]
             proto_end = proto_start + proto["numbc"] * 4 
@@ -91,8 +89,16 @@ def unprot_2(path):
         new_size = len(script.data)
         old_size = os.path.getsize(path)
         if new_size != old_size:
-            pathlib.Path(save_to).write_bytes(script.data)
-            tk.messagebox.showinfo("Unprot v2.1", f"{lang['saved']}: {saved_as}.")
+            base_filename = os.path.basename(path)
+
+            match = re.search(r'(?P<base>.*) - JitTools \((?P<type>.*)\)\.lua$', base_filename)
+            if match:
+                output_file = f"{match.group('base')} - JitTools ({match.group('type')} + U).lua"
+            else:
+                output_file = f"{os.path.splitext(base_filename)[0]} - JitTools (U).lua"
+
+            pathlib.Path(output_file).write_bytes(script.data)
+            tk.messagebox.showinfo("Unprot v2.1", f"{lang['saved']}: {os.path.basename(output_file)}.")
         else:
             tk.messagebox.showinfo("Unprot v2.1", f"{lang['err_unprot']}")
     
@@ -104,6 +110,7 @@ def opcode_info(data, pos):
 def new_dist(offset, dist):
     opcode_pos = offset // 4
     return (opcode_pos + dist + 1) * 4
+
 class LuaJIT:
     def __init__(self, path):
         self.path = path

@@ -159,7 +159,7 @@ if scriptInit ~= nil then
         rawset(self, index, value)
 
         if type(value) == "function" then
-            dumper.dumpFunc(value, "dumps\\" .. getFileNameFromPathWithoutEx(arg[1]) .. "." .. index .. ".txt")
+            dumper.dumpFunc(value, "../../dumps/" .. getFileNameFromPathWithoutEx(arg[1]) .. "." .. index .. ".txt")
 
             for i = 0, 3 do 
                 local a, b = debug.getupvalue(value, i)

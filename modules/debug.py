@@ -245,27 +245,22 @@ def debugger(path):
                                             f"{lang['warning_3']} Debugger? {lang['warning_4']}")
     
     if result:
+      hwnd = windll.kernel32.GetConsoleWindow()
+      windll.user32.ShowWindow(hwnd, 1)  # SW_NORMAL
+      windll.user32.PostMessageW(hwnd, 0x0100, 0x0D, 0)
+      windll.user32.PostMessageW(hwnd, 0x0101, 0x0D, 0)
+
       file_path_abs = os.path.abspath(path)
 
       os.chdir(f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}tools{os.sep}Debugger")
       os.system(f'luajit.exe'
           f' !0LuaRuntimeChecker.lua "{file_path_abs}"')
 
-      dumps_dir = os.path.join(f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}tools{os.sep}Debugger', 'dumps')
-      files = [f for f in os.listdir(dumps_dir) if not f.endswith('.ini')]
-      if files:
-          for file in files:
-              file_src = os.path.join(dumps_dir, file)
-              file_dst = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(dumps_dir))), 'dumps', file)
-              with open(file_src, 'rb') as src_file, open(file_dst, 'wb') as dst_file:
-                  dst_file.write(src_file.read())
-              os.remove(file_src)
-
-              tk.messagebox.showinfo("Debugger", f"{lang["dumps_saved"]}: {os.path.join(os.path.dirname(file_path_abs), 'dumps')}")
+      dumps_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'dumps')
+      if os.path.exists(dumps_dir):
+          tk.messagebox.showinfo("Debugger", f"{lang['dumps_saved']}: {dumps_dir}")
       else:
           tk.messagebox.showerror("Debugger", f"{lang['error_no_dumps']}")
-
-      os.chdir(f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}{os.sep}")
 
 def xorunpack(path):
     result = tk.messagebox.askyesno("XOR Unpack", f"[!] XOR Unpack {lang['warning_1']}\n"
