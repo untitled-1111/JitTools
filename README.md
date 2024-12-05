@@ -22,7 +22,7 @@
 <details>
   <summary>Спойлер</summary>
 
-- Декомпиляция
+- Декомпилятор
     - [x] [LuaJIT Fork](https://www.blast.hk/threads/221567)
     - [x] Python Fork
 
@@ -30,24 +30,30 @@
     - [x] [Unprot v2.1](https://www.blast.hk/threads/221567/post-1559984)
 
 - Запуск кода
-  - [x] [Moonsec Dumper](https://t.me/quesada_main)
-  - [x] [Hook Obfuscation](https://www.blast.hk/threads/127048)
-  - [x] [Lua Debugger](https://www.blast.hk/threads/46138)
-  - [x] [XOR Unpacker](https://github.com/Gork3m/filesecuring-xor-unpacker)
+  - [x] [Moonsec Dump](https://t.me/quesada_main)
+  - [x] [Hook Obf](https://www.blast.hk/threads/127048)
+  - [x] [Debugger](https://www.blast.hk/threads/46138)
+  - [x] [XOR Unpack](https://github.com/Gork3m/filesecuring-xor-unpacker)
 
-- Деобфускаторы
-  - [x] [Base64 Deobfuscator](http://lua-users.org/wiki/BaseSixtyFour)
-  - [x] [Shit Deobfuscator](https://www.blast.hk/threads/173002/#post-1285137)
+- Деобфускация
+  - [x] [Base64 Deobf](http://lua-users.org/wiki/BaseSixtyFour)
+  - [x] [Shit Deobf](https://www.blast.hk/threads/173002/#post-1285137)
 
 - Компиляция
   - [x] [LuaJIT Compiler](https://github.com/LuaJIT/LuaJIT)
   - [x] [Joiner](https://www.blast.hk/threads/38714/post-376714)
 
-- Просмотр инструкций
+- Инструкции
   - [x] [Bytecode Editor](https://www.blast.hk/threads/224821/)
-  - [x] [BCViewer](https://t.me/AkuJla)
   - [x] [Luad](https://github.com/imring/Luad)
+  - [x] [BCViewer](https://t.me/AkuJla)
   - [x] ASM
+ 
+- Веб-инструменты
+  - [x] [LuaJIT Scanner](https://luajit.ru/)
+  - [x] [HexEd.it](https://hexed.it/)
+  - [x] [Lua Beautify](https://codebeautify.org/lua-beautifier#)
+  - [x] [Lua Online](https://onecompiler.com/lua)
 
 </details>
 
